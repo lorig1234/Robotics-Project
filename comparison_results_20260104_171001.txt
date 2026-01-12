@@ -1,0 +1,362 @@
+Video Rotation Analysis - Method Comparison
+================================================================================
+Video: qr_code_video2.mp4
+Sample rate: Every 30 frame(s)
+Total frame pairs: 23
+
+[1] frame_0000_t0.000s.jpg → frame_0001_t0.500s.jpg
+  SIFT: Total=  0.575°
+  ArUco: Failed - No markers detected
+
+[2] frame_0001_t0.500s.jpg → frame_0002_t1.001s.jpg
+  SIFT:  Roll= -0.920° Pitch= -3.136° Yaw= -1.641° Total=  3.669°
+  ArUco: Roll= -2.043° Pitch=-11.162° Yaw= -0.785° Total= 11.387°
+  Euler Angle Diff: Roll=1.123° Pitch=8.025° Yaw=0.856° Total=7.719°
+  Matrix Diff: Frobenius=0.200589 Angle=8.134°
+  Euler Agreement: 53.0%
+  Matrix Agreement: 59.3%
+  SIFT Rotation Matrix:
+    [+0.998093 +0.029513 -0.054224]
+    [-0.028596 +0.999436 +0.017617]
+    [+0.054713 -0.016033 +0.998373]
+  ArUco Rotation Matrix:
+    [+0.980993 +0.020596 -0.192948]
+    [-0.013446 +0.999176 +0.038294]
+    [+0.193577 -0.034972 +0.980461]
+
+[3] frame_0002_t1.001s.jpg → frame_0003_t1.501s.jpg
+  SIFT:  Roll= -2.166° Pitch= -1.272° Yaw= -4.648° Total=  5.304°
+  ArUco: Roll= +3.048° Pitch= -6.900° Yaw= -2.378° Total=  7.853°
+  Euler Angle Diff: Roll=5.214° Pitch=5.628° Yaw=2.269° Total=2.549°
+  Matrix Diff: Frobenius=0.199850 Angle=8.104°
+  Euler Agreement: 53.8%
+  Matrix Agreement: 59.5%
+  SIFT Rotation Matrix:
+    [+0.996466 +0.081810 -0.019044]
+    [-0.081012 +0.995932 +0.039465]
+    [+0.022195 -0.037783 +0.999039]
+  ArUco Rotation Matrix:
+    [+0.991903 +0.035059 -0.122066]
+    [-0.041200 +0.997990 -0.048150]
+    [+0.120133 +0.052789 +0.991353]
+
+[4] frame_0003_t1.501s.jpg → frame_0004_t2.002s.jpg
+  SIFT:  Roll= -4.852° Pitch= -3.065° Yaw= -4.379° Total=  7.296°
+  ArUco: Roll= -0.994° Pitch=-10.000° Yaw= -1.647° Total= 10.197°
+  Euler Angle Diff: Roll=3.858° Pitch=6.934° Yaw=2.731° Total=2.901°
+  Matrix Diff: Frobenius=0.210402 Angle=8.532°
+  Euler Agreement: 51.5%
+  Matrix Agreement: 57.3%
+  SIFT Rotation Matrix:
+    [+0.995655 +0.080585 -0.046670]
+    [-0.076239 +0.993162 +0.088408]
+    [+0.053475 -0.084466 +0.994990]
+  ArUco Rotation Matrix:
+    [+0.984402 +0.031756 -0.173045]
+    [-0.028312 +0.999350 +0.022335]
+    [+0.173641 -0.017087 +0.984661]
+
+[5] frame_0004_t2.002s.jpg → frame_0005_t2.502s.jpg
+  SIFT:  Roll= -0.115° Pitch= -6.453° Yaw= -0.797° Total=  6.503°
+  ArUco: Roll= -1.679° Pitch=-10.636° Yaw= -2.774° Total= 11.157°
+  Euler Angle Diff: Roll=1.564° Pitch=4.184° Yaw=1.976° Total=4.654°
+  Matrix Diff: Frobenius=0.122811 Angle=4.977°
+  Euler Agreement: 71.8%
+  Matrix Agreement: 75.1%
+  SIFT Rotation Matrix:
+    [+0.993569 +0.014143 -0.112342]
+    [-0.013830 +0.999898 +0.003570]
+    [+0.112381 -0.001993 +0.993663]
+  ArUco Rotation Matrix:
+    [+0.981667 +0.053775 -0.182862]
+    [-0.047563 +0.998138 +0.038192]
+    [+0.184576 -0.028794 +0.982396]
+
+[6] frame_0005_t2.502s.jpg → frame_0006_t3.003s.jpg
+  SIFT:  Roll= -1.095° Pitch= -5.505° Yaw= +1.094° Total=  5.708°
+  ArUco: Roll= +2.565° Pitch= -0.140° Yaw= -1.837° Total=  3.156°
+  Euler Angle Diff: Roll=3.660° Pitch=5.364° Yaw=2.931° Total=2.552°
+  Matrix Diff: Frobenius=0.173884 Angle=7.049°
+  Euler Agreement: 58.9%
+  Matrix Agreement: 64.8%
+  SIFT Rotation Matrix:
+    [+0.995207 -0.017258 -0.096255]
+    [+0.019006 +0.999670 +0.017280]
+    [+0.095925 -0.019027 +0.995207]
+  ArUco Rotation Matrix:
+    [+0.999483 +0.031914 -0.003876]
+    [-0.032055 +0.998488 -0.044655]
+    [+0.002445 +0.044756 +0.998995]
+
+[7] frame_0006_t3.003s.jpg → frame_0007_t3.503s.jpg
+  SIFT:  Roll= +1.599° Pitch= -4.454° Yaw= -0.359° Total=  4.742°
+  ArUco: Roll= +0.875° Pitch= -2.376° Yaw= -0.163° Total=  2.536°
+  Euler Angle Diff: Roll=0.724° Pitch=2.079° Yaw=0.196° Total=2.206°
+  Matrix Diff: Frobenius=0.054453 Angle=2.206°
+  Euler Agreement: 87.2%
+  Matrix Agreement: 89.0%
+  SIFT Rotation Matrix:
+    [+0.996960 +0.004100 -0.077810]
+    [-0.006250 +0.999604 -0.027419]
+    [+0.077666 +0.027822 +0.996591]
+  ArUco Rotation Matrix:
+    [+0.999136 +0.002209 -0.041491]
+    [-0.002839 +0.999881 -0.015147]
+    [+0.041452 +0.015252 +0.999024]
+
+[8] frame_0007_t3.503s.jpg → frame_0008_t4.004s.jpg
+  SIFT:  Roll= -2.680° Pitch= -2.890° Yaw= -2.187° Total=  4.540°
+  ArUco: Roll= +1.381° Pitch=-13.109° Yaw= -3.530° Total= 13.603°
+  Euler Angle Diff: Roll=4.061° Pitch=10.219° Yaw=1.344° Total=9.063°
+  Matrix Diff: Frobenius=0.271254 Angle=11.007°
+  Euler Agreement: 36.0%
+  Matrix Agreement: 45.0%
+  SIFT Rotation Matrix:
+    [+0.998000 +0.040473 -0.048550]
+    [-0.038110 +0.998089 +0.048641]
+    [+0.050426 -0.046694 +0.997636]
+  ArUco Rotation Matrix:
+    [+0.972092 +0.056103 -0.227791]
+    [-0.059973 +0.998149 -0.010096]
+    [+0.226803 +0.023476 +0.973658]
+
+[9] frame_0008_t4.004s.jpg → frame_0009_t4.504s.jpg
+  SIFT:  Roll= -2.314° Pitch= -3.530° Yaw= -1.742° Total=  4.593°
+  ArUco: Roll= -5.428° Pitch= -8.443° Yaw= -0.856° Total= 10.105°
+  Euler Angle Diff: Roll=3.114° Pitch=4.913° Yaw=0.886° Total=5.512°
+  Matrix Diff: Frobenius=0.143941 Angle=5.834°
+  Euler Agreement: 66.0%
+  Matrix Agreement: 70.8%
+  SIFT Rotation Matrix:
+    [+0.997641 +0.032857 -0.060265]
+    [-0.030339 +0.998647 +0.042236]
+    [+0.061571 -0.040308 +0.997288]
+  ArUco Rotation Matrix:
+    [+0.989051 +0.028756 -0.144742]
+    [-0.014773 +0.995197 +0.096770]
+    [+0.146830 -0.093573 +0.984726]
+
+[10] frame_0009_t4.504s.jpg → frame_0010_t5.005s.jpg
+  SIFT:  Roll= -1.344° Pitch= -3.079° Yaw= -1.610° Total=  3.741°
+  ArUco: Roll= -8.455° Pitch=-13.720° Yaw= +0.210° Total= 16.094°
+  Euler Angle Diff: Roll=7.111° Pitch=10.641° Yaw=1.820° Total=12.353°
+  Matrix Diff: Frobenius=0.314640 Angle=12.774°
+  Euler Agreement: 25.4%
+  Matrix Agreement: 36.1%
+  SIFT Rotation Matrix:
+    [+0.998162 +0.029343 -0.053019]
+    [-0.028050 +0.999295 +0.024960]
+    [+0.053714 -0.023427 +0.998282]
+  ArUco Rotation Matrix:
+    [+0.971458 +0.031252 -0.235143]
+    [+0.003558 +0.989252 +0.146178]
+    [+0.237184 -0.142843 +0.960906]
+
+[11] frame_0010_t5.005s.jpg → frame_0011_t5.505s.jpg
+  SIFT:  Roll= -1.383° Pitch= -2.277° Yaw= -2.081° Total=  3.397°
+  ArUco: Roll= -1.009° Pitch= -0.898° Yaw= -0.636° Total=  1.496°
+  Euler Angle Diff: Roll=0.374° Pitch=1.379° Yaw=1.444° Total=1.901°
+  Matrix Diff: Frobenius=0.050327 Angle=2.039°
+  Euler Agreement: 88.3%
+  Matrix Agreement: 89.8%
+  SIFT Rotation Matrix:
+    [+0.998552 +0.037255 -0.038814]
+    [-0.036279 +0.999015 +0.025559]
+    [+0.039728 -0.024114 +0.998920]
+  ArUco Rotation Matrix:
+    [+0.999816 +0.011381 -0.015469]
+    [-0.011105 +0.999780 +0.017781]
+    [+0.015668 -0.017606 +0.999722]
+
+[12] frame_0011_t5.505s.jpg → frame_0012_t6.006s.jpg
+  SIFT:  Roll= -1.579° Pitch=-10.719° Yaw= -0.949° Total= 10.889°
+  ArUco: Roll= +1.503° Pitch= -5.830° Yaw= -0.503° Total=  6.035°
+  Euler Angle Diff: Roll=3.082° Pitch=4.889° Yaw=0.445° Total=4.853°
+  Matrix Diff: Frobenius=0.143833 Angle=5.830°
+  Euler Agreement: 66.5%
+  Matrix Agreement: 70.9%
+  SIFT Rotation Matrix:
+    [+0.982416 +0.021680 -0.185441]
+    [-0.016273 +0.999398 +0.030632]
+    [+0.185994 -0.027076 +0.982178]
+  ArUco Rotation Matrix:
+    [+0.994789 +0.006121 -0.101773]
+    [-0.008742 +0.999641 -0.025332]
+    [+0.101581 +0.026090 +0.994485]
+
+[13] frame_0012_t6.006s.jpg → frame_0013_t6.506s.jpg
+  SIFT:  Roll= +1.319° Pitch= -3.565° Yaw= -0.890° Total=  3.895°
+  ArUco: Roll= +4.518° Pitch= -2.580° Yaw= -0.865° Total=  5.257°
+  Euler Angle Diff: Roll=3.199° Pitch=0.985° Yaw=0.025° Total=1.362°
+  Matrix Diff: Frobenius=0.082629 Angle=3.348°
+  Euler Agreement: 80.7%
+  Matrix Agreement: 83.3%
+  SIFT Rotation Matrix:
+    [+0.997944 +0.014104 -0.062514]
+    [-0.015509 +0.999637 -0.022051]
+    [+0.062180 +0.022975 +0.997800]
+  ArUco Rotation Matrix:
+    [+0.998872 +0.011503 -0.046064]
+    [-0.015080 +0.996833 -0.078081]
+    [+0.045020 +0.078687 +0.995882]
+
+[14] frame_0013_t6.506s.jpg → frame_0014_t7.007s.jpg
+  SIFT:  Roll=-13.524° Pitch= +7.068° Yaw= +1.613° Total= 15.424°
+  ArUco: Roll= +1.735° Pitch= -8.953° Yaw= -1.004° Total=  9.159°
+  Euler Angle Diff: Roll=15.259° Pitch=16.021° Yaw=2.617° Total=6.265°
+  Matrix Diff: Frobenius=0.544849 Angle=22.213°
+  Euler Agreement: 0.0%
+  Matrix Agreement: 0.0%
+  SIFT Rotation Matrix:
+    [+0.992009 -0.056128 +0.112999]
+    [+0.027932 +0.971077 +0.237129]
+    [-0.123040 -0.232077 +0.964884]
+  ArUco Rotation Matrix:
+    [+0.987665 +0.012800 -0.156060]
+    [-0.017305 +0.999471 -0.027543]
+    [+0.155625 +0.029904 +0.987363]
+
+[15] frame_0014_t7.007s.jpg → frame_0015_t7.507s.jpg
+  SIFT:  Roll= -1.345° Pitch= -3.483° Yaw= -1.912° Total=  4.214°
+  ArUco: Roll= -2.244° Pitch= -5.218° Yaw= -1.204° Total=  5.827°
+  Euler Angle Diff: Roll=0.899° Pitch=1.735° Yaw=0.709° Total=1.614°
+  Matrix Diff: Frobenius=0.050728 Angle=2.055°
+  Euler Agreement: 88.0%
+  Matrix Agreement: 89.7%
+  SIFT Rotation Matrix:
+    [+0.997597 +0.034787 -0.059924]
+    [-0.033309 +0.999120 +0.025486]
+    [+0.060758 -0.023429 +0.997878]
+  ArUco Rotation Matrix:
+    [+0.995636 +0.024549 -0.090038]
+    [-0.020917 +0.998938 +0.041061]
+    [+0.090950 -0.038998 +0.995092]
+
+[16] frame_0015_t7.507s.jpg → frame_0016_t8.008s.jpg
+  SIFT:  Roll= +3.921° Pitch= -0.884° Yaw= +0.132° Total=  4.022°
+  ArUco: Roll= +4.051° Pitch= +0.375° Yaw= -1.053° Total=  4.206°
+  Euler Angle Diff: Roll=0.130° Pitch=1.259° Yaw=1.186° Total=0.184°
+  Matrix Diff: Frobenius=0.042793 Angle=1.734°
+  Euler Agreement: 90.0%
+  Matrix Agreement: 91.3%
+  SIFT Rotation Matrix:
+    [+0.999878 -0.003360 -0.015226]
+    [+0.002311 +0.997655 -0.068409]
+    [+0.015420 +0.068365 +0.997541]
+  ArUco Rotation Matrix:
+    [+0.999810 +0.018797 +0.005236]
+    [-0.018379 +0.997325 -0.070750]
+    [-0.006551 +0.070640 +0.997480]
+
+[17] frame_0016_t8.008s.jpg → frame_0017_t8.508s.jpg
+  SIFT:  Roll= -1.447° Pitch= -3.877° Yaw= -2.237° Total=  4.727°
+  ArUco: Roll= -2.545° Pitch=-12.510° Yaw= -0.464° Total= 12.784°
+  Euler Angle Diff: Roll=1.099° Pitch=8.633° Yaw=1.773° Total=8.057°
+  Matrix Diff: Frobenius=0.218216 Angle=8.850°
+  Euler Agreement: 48.7%
+  Matrix Agreement: 55.8%
+  SIFT Rotation Matrix:
+    [+0.996951 +0.040730 -0.066556]
+    [-0.038947 +0.998853 +0.027867]
+    [+0.067615 -0.025189 +0.997393]
+  ArUco Rotation Matrix:
+    [+0.976226 +0.017717 -0.216031]
+    [-0.007913 +0.998903 +0.046164]
+    [+0.216611 -0.043357 +0.975295]
+
+[18] frame_0017_t8.508s.jpg → frame_0018_t9.009s.jpg
+  SIFT:  Roll= +1.594° Pitch= -1.975° Yaw= -0.781° Total=  2.647°
+  ArUco: Roll= -1.685° Pitch= -5.112° Yaw= -1.155° Total=  5.520°
+  Euler Angle Diff: Roll=3.279° Pitch=3.137° Yaw=0.374° Total=2.873°
+  Matrix Diff: Frobenius=0.112756 Angle=4.569°
+  Euler Agreement: 73.7%
+  Matrix Agreement: 77.2%
+  SIFT Rotation Matrix:
+    [+0.999314 +0.012659 -0.034817]
+    [-0.013614 +0.999533 -0.027345]
+    [+0.034455 +0.027800 +0.999020]
+  ArUco Rotation Matrix:
+    [+0.995821 +0.022762 -0.088447]
+    [-0.020072 +0.999312 +0.031188]
+    [+0.089096 -0.029282 +0.995593]
+
+[19] frame_0018_t9.009s.jpg → frame_0019_t9.509s.jpg
+  SIFT:  Roll= -0.889° Pitch= -3.186° Yaw= +0.133° Total=  3.310°
+  ArUco: Roll= -1.544° Pitch= -4.672° Yaw= +0.072° Total=  4.920°
+  Euler Angle Diff: Roll=0.655° Pitch=1.486° Yaw=0.061° Total=1.610°
+  Matrix Diff: Frobenius=0.040144 Angle=1.626°
+  Euler Agreement: 90.6%
+  Matrix Agreement: 91.9%
+  SIFT Rotation Matrix:
+    [+0.998451 -0.001460 -0.055614]
+    [+0.002320 +0.999879 +0.015387]
+    [+0.055585 -0.015492 +0.998334]
+  ArUco Rotation Matrix:
+    [+0.996677 +0.000937 -0.081455]
+    [+0.001254 +0.999639 +0.026847]
+    [+0.081451 -0.026860 +0.996315]
+
+[20] frame_0019_t9.509s.jpg → frame_0020_t10.010s.jpg
+  SIFT:  Roll= +1.069° Pitch= +1.756° Yaw= +0.821° Total=  2.207°
+  ArUco: Roll= +3.662° Pitch= +6.499° Yaw= +2.336° Total=  7.753°
+  Euler Angle Diff: Roll=2.593° Pitch=4.743° Yaw=1.515° Total=5.546°
+  Matrix Diff: Frobenius=0.137258 Angle=5.563°
+  Euler Agreement: 67.6%
+  Matrix Agreement: 72.2%
+  SIFT Rotation Matrix:
+    [+0.999428 -0.013759 +0.030894]
+    [+0.014326 +0.999732 -0.018210]
+    [-0.030635 +0.018642 +0.999357]
+  ArUco Rotation Matrix:
+    [+0.992748 -0.033449 +0.115463]
+    [+0.040493 +0.997424 -0.059213]
+    [-0.113185 +0.063459 +0.991545]
+
+[21] frame_0020_t10.010s.jpg → frame_0021_t10.510s.jpg
+  SIFT:  Roll= +2.084° Pitch= +4.269° Yaw= +2.307° Total=  5.246°
+  ArUco: Roll= +4.761° Pitch= +8.758° Yaw= +0.710° Total=  9.966°
+  Euler Angle Diff: Roll=2.678° Pitch=4.489° Yaw=1.597° Total=4.719°
+  Matrix Diff: Frobenius=0.137007 Angle=5.553°
+  Euler Agreement: 68.4%
+  Matrix Agreement: 72.2%
+  SIFT Rotation Matrix:
+    [+0.996417 -0.037517 +0.075794]
+    [+0.040136 +0.998638 -0.033333]
+    [-0.074441 +0.036255 +0.996566]
+  ArUco Rotation Matrix:
+    [+0.988265 +0.000292 +0.152750]
+    [+0.012244 +0.996629 -0.081121]
+    [-0.152258 +0.082039 +0.984930]
+
+[22] frame_0021_t10.510s.jpg → frame_0022_t11.011s.jpg
+  SIFT:  Roll= +4.122° Pitch= +3.708° Yaw= +2.363° Total=  5.974°
+  ArUco: Roll= +7.530° Pitch=+12.011° Yaw= +2.064° Total= 14.204°
+  Euler Angle Diff: Roll=3.408° Pitch=8.303° Yaw=0.299° Total=8.230°
+  Matrix Diff: Frobenius=0.221779 Angle=8.994°
+  Euler Agreement: 48.2%
+  Matrix Agreement: 55.0%
+  SIFT Rotation Matrix:
+    [+0.997057 -0.036484 +0.067421]
+    [+0.041150 +0.996756 -0.069161]
+    [-0.064679 +0.071731 +0.995325]
+  ArUco Rotation Matrix:
+    [+0.977472 -0.008457 +0.210897]
+    [+0.035232 +0.991715 -0.123528]
+    [-0.208105 +0.128176 +0.969672]
+
+[23] frame_0022_t11.011s.jpg → frame_0023_t11.511s.jpg
+  SIFT:  Roll= +6.195° Pitch= +1.878° Yaw= -0.166° Total=  6.478°
+  ArUco: Roll= +5.533° Pitch= +4.479° Yaw= +1.870° Total=  7.304°
+  Euler Angle Diff: Roll=0.662° Pitch=2.601° Yaw=2.035° Total=0.826°
+  Matrix Diff: Frobenius=0.083671 Angle=3.390°
+  Euler Agreement: 80.6%
+  Matrix Agreement: 83.0%
+  SIFT Rotation Matrix:
+    [+0.999459 +0.006411 +0.032267]
+    [-0.002889 +0.994145 -0.108013]
+    [-0.032771 +0.107861 +0.993626]
+  ArUco Rotation Matrix:
+    [+0.996415 -0.024947 +0.080835]
+    [+0.032526 +0.995056 -0.093837]
+    [-0.078094 +0.096130 +0.992301]
+

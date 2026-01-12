@@ -1,0 +1,48 @@
+Video Rotation Analysis - Method Comparison
+================================================================================
+Video: qr_code_video.mp4
+Sample rate: Every 30 frame(s)
+Total frame pairs: 7
+
+[1] frame_0000_t0.000s.jpg → frame_0001_t0.500s.jpg
+  SIFT:  Roll= -0.108° Pitch= +0.392° Yaw= -0.213° Total=  0.459°
+  ArUco: Roll= +0.203° Pitch= +0.686° Yaw= -0.319° Total=  0.783°
+  Diff:  Roll=0.310° Pitch=0.294° Yaw=0.107° Total=0.325°
+  Agreement: 98.4%
+
+[2] frame_0001_t0.500s.jpg → frame_0002_t1.001s.jpg
+  SIFT:  Roll= +0.132° Pitch= +2.571° Yaw= +0.076° Total=  2.576°
+  ArUco: Roll= +0.259° Pitch= +3.204° Yaw= +0.201° Total=  3.221°
+  Diff:  Roll=0.126° Pitch=0.633° Yaw=0.126° Total=0.645°
+  Agreement: 96.8%
+
+[3] frame_0002_t1.001s.jpg → frame_0003_t1.501s.jpg
+  SIFT:  Roll= -0.278° Pitch= -1.165° Yaw= +0.856° Total=  1.470°
+  ArUco: Roll= +0.133° Pitch= +3.235° Yaw= +0.519° Total=  3.279°
+  Diff:  Roll=0.411° Pitch=4.400° Yaw=0.336° Total=1.808°
+  Agreement: 91.0%
+
+[4] frame_0003_t1.501s.jpg → frame_0004_t2.002s.jpg
+  SIFT:  Roll= +0.421° Pitch= -0.361° Yaw= +0.258° Total=  0.612°
+  ArUco: Roll= +0.988° Pitch= +6.132° Yaw= +1.533° Total=  6.384°
+  Diff:  Roll=0.567° Pitch=6.492° Yaw=1.275° Total=5.772°
+  Agreement: 71.1%
+
+[5] frame_0004_t2.002s.jpg → frame_0005_t2.502s.jpg
+  SIFT:  Roll= +0.440° Pitch= +3.552° Yaw= +1.301° Total=  3.804°
+  ArUco: Roll= +1.414° Pitch=+13.583° Yaw= +3.001° Total= 13.945°
+  Diff:  Roll=0.974° Pitch=10.031° Yaw=1.701° Total=10.141°
+  Agreement: 49.3%
+
+[6] frame_0005_t2.502s.jpg → frame_0006_t3.003s.jpg
+  SIFT:  Roll= -1.820° Pitch= -1.278° Yaw= +0.246° Total=  2.235°
+  ArUco: Roll= -0.743° Pitch= +2.619° Yaw= +1.367° Total=  3.054°
+  Diff:  Roll=1.077° Pitch=3.897° Yaw=1.120° Total=0.819°
+  Agreement: 95.9%
+
+[7] frame_0006_t3.003s.jpg → frame_0007_t3.503s.jpg
+  SIFT:  Roll= -7.066° Pitch= +6.114° Yaw= +1.042° Total=  9.441°
+  ArUco: Roll= +1.301° Pitch= +4.065° Yaw= +0.911° Total=  4.354°
+  Diff:  Roll=8.367° Pitch=2.049° Yaw=0.131° Total=5.086°
+  Agreement: 74.6%
+

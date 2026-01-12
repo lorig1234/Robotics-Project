@@ -1,0 +1,133 @@
+Video Rotation Analysis Results
+================================================================================
+Video: qr_code_video2.mp4
+Total frame pairs: 23
+
+Frame-by-Frame Results:
+--------------------------------------------------------------------------------
+
+[Frame 00] t=0.00s
+  SIFT:  Roll=  -0.56° Pitch=  -0.89° Yaw=  +0.22° Total=  1.07°
+  ArUco: FAILED - No markers detected
+
+[Frame 01] t=0.50s
+  SIFT:  Roll=  -1.15° Pitch=  -4.97° Yaw=  -0.29° Total=  5.11°
+  ArUco: Roll=  -2.04° Pitch= -11.16° Yaw=  -0.79° Total= 11.39°
+  Agreement: Euler=63.8% Matrix=68.6%
+
+[Frame 02] t=1.00s
+  SIFT:  Roll=  +2.64° Pitch=  -7.07° Yaw=  -0.82° Total=  7.57°
+  ArUco: Roll=  +3.05° Pitch=  -6.90° Yaw=  -2.38° Total=  7.85°
+  Agreement: Euler=90.6% Matrix=92.1%
+
+[Frame 03] t=1.50s
+  SIFT:  Roll=  -3.59° Pitch=  +4.31° Yaw=  -6.07° Total=  8.16°
+  ArUco: Roll=  -0.99° Pitch= -10.00° Yaw=  -1.65° Total= 10.20°
+  Agreement: Euler=12.2% Matrix=23.8%
+
+[Frame 04] t=2.00s
+  SIFT:  Roll=  +0.17° Pitch=  -4.85° Yaw=  -1.74° Total=  5.16°
+  ArUco: Roll=  -1.68° Pitch= -10.64° Yaw=  -2.77° Total= 11.16°
+  Agreement: Euler=64.4% Matrix=69.0%
+
+[Frame 05] t=2.50s
+  SIFT:  Roll=  -0.72° Pitch=  -3.27° Yaw=  -0.15° Total=  3.35°
+  ArUco: Roll=  +2.57° Pitch=  -0.14° Yaw=  -1.84° Total=  3.16°
+  Agreement: Euler=72.1% Matrix=76.0%
+
+[Frame 06] t=3.00s
+  SIFT:  Roll=  +0.33° Pitch=  -2.51° Yaw=  -1.40° Total=  2.89°
+  ArUco: Roll=  +0.87° Pitch=  -2.38° Yaw=  -0.16° Total=  2.54°
+  Agreement: Euler=92.1% Matrix=93.1%
+
+[Frame 07] t=3.50s
+  SIFT:  Roll=  -1.81° Pitch=  -2.06° Yaw=  -1.26° Total=  3.03°
+  ArUco: Roll=  +1.38° Pitch= -13.11° Yaw=  -3.53° Total= 13.60°
+  Agreement: Euler=32.3% Matrix=41.8%
+
+[Frame 08] t=4.00s
+  SIFT:  Roll=  -2.06° Pitch=  +0.12° Yaw=  -3.76° Total=  4.28°
+  ArUco: Roll=  -5.43° Pitch=  -8.44° Yaw=  -0.86° Total= 10.11°
+  Agreement: Euler=44.3% Matrix=52.1%
+
+[Frame 09] t=4.50s
+  SIFT:  Roll=  -1.32° Pitch=  -3.15° Yaw=  -1.61° Total=  3.79°
+  ArUco: Roll=  -8.46° Pitch= -13.72° Yaw=  +0.21° Total= 16.09°
+  Agreement: Euler=25.6% Matrix=36.4%
+
+[Frame 10] t=5.00s
+  SIFT:  Roll=  -1.55° Pitch=  +0.60° Yaw=  -2.31° Total=  2.84°
+  ArUco: Roll=  -1.01° Pitch=  -0.90° Yaw=  -0.64° Total=  1.50°
+  Agreement: Euler=86.7% Matrix=88.5%
+
+[Frame 11] t=5.51s
+  SIFT:  Roll=  -4.40° Pitch=  -1.81° Yaw=  -1.16° Total=  4.91°
+  ArUco: Roll=  +1.50° Pitch=  -5.83° Yaw=  -0.50° Total=  6.04°
+  Agreement: Euler=58.6% Matrix=64.0%
+
+[Frame 12] t=6.01s
+  SIFT:  Roll=  +0.69° Pitch=  +1.65° Yaw=  -3.03° Total=  3.53°
+  ArUco: Roll=  +4.52° Pitch=  -2.58° Yaw=  -0.86° Total=  5.26°
+  Agreement: Euler=64.8% Matrix=69.4%
+
+[Frame 13] t=6.51s
+  SIFT:  Roll=  -0.23° Pitch=  -1.23° Yaw=  -1.49° Total=  1.95°
+  ArUco: Roll=  +1.73° Pitch=  -8.95° Yaw=  -1.00° Total=  9.16°
+  Agreement: Euler=53.9% Matrix=60.0%
+
+[Frame 14] t=7.01s
+  SIFT:  Roll=  -0.57° Pitch=  -4.13° Yaw=  -1.73° Total=  4.52°
+  ArUco: Roll=  -2.24° Pitch=  -5.22° Yaw=  -1.20° Total=  5.83°
+  Agreement: Euler=88.1% Matrix=89.9%
+
+[Frame 15] t=7.51s
+  SIFT:  Roll=  +1.40° Pitch=  -0.44° Yaw=  -0.96° Total=  1.75°
+  ArUco: Roll=  +4.05° Pitch=  +0.38° Yaw=  -1.05° Total=  4.21°
+  Agreement: Euler=84.0% Matrix=86.1%
+
+[Frame 16] t=8.01s
+  SIFT:  Roll=  -1.34° Pitch=  -3.97° Yaw=  -2.16° Total=  4.73°
+  ArUco: Roll=  -2.55° Pitch= -12.51° Yaw=  -0.46° Total= 12.78°
+  Agreement: Euler=49.2% Matrix=56.2%
+
+[Frame 17] t=8.51s
+  SIFT:  Roll=  +0.34° Pitch=  -1.60° Yaw=  -0.80° Total=  1.82°
+  ArUco: Roll=  -1.68° Pitch=  -5.11° Yaw=  -1.15° Total=  5.52°
+  Agreement: Euler=76.5% Matrix=79.6%
+
+[Frame 18] t=9.01s
+  SIFT:  Roll=  -0.66° Pitch=  -2.59° Yaw=  -0.36° Total=  2.70°
+  ArUco: Roll=  -1.54° Pitch=  -4.67° Yaw=  +0.07° Total=  4.92°
+  Agreement: Euler=86.7% Matrix=88.6%
+
+[Frame 19] t=9.51s
+  SIFT:  Roll=  +0.25° Pitch=  +1.49° Yaw=  +1.07° Total=  1.85°
+  ArUco: Roll=  +3.66° Pitch=  +6.50° Yaw=  +2.34° Total=  7.75°
+  Agreement: Euler=64.3% Matrix=69.3%
+
+[Frame 20] t=10.01s
+  SIFT:  Roll=  +2.99° Pitch=  +5.90° Yaw=  +1.53° Total=  6.76°
+  ArUco: Roll=  +4.76° Pitch=  +8.76° Yaw=  +0.71° Total=  9.97°
+  Agreement: Euler=80.0% Matrix=82.4%
+
+[Frame 21] t=10.51s
+  SIFT:  Roll=  +2.05° Pitch=  +5.54° Yaw=  +2.32° Total=  6.31°
+  ArUco: Roll=  +7.53° Pitch= +12.01° Yaw=  +2.06° Total= 14.20°
+  Agreement: Euler=51.0% Matrix=57.5%
+
+[Frame 22] t=11.01s
+  SIFT:  Roll=  +0.26° Pitch=  -0.47° Yaw=  +6.31° Total=  6.33°
+  ArUco: Roll=  +5.53° Pitch=  +4.48° Yaw=  +1.87° Total=  7.30°
+  Agreement: Euler=51.0% Matrix=57.1%
+
+================================================================================
+Walking Path Summary
+--------------------------------------------------------------------------------
+
+SIFT Path:
+  Final position: X=-3.88 Y=2.20 Z=10.38
+  Cumulative rotation: Roll=-8.84° Pitch=-25.39° Yaw=-19.66°
+
+ArUco Path:
+  Final position: X=-8.66 Y=2.21 Z=2.74
+  Cumulative rotation: Roll=13.53° Pitch=-90.14° Yaw=-13.59°

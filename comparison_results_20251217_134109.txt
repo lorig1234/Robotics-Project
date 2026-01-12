@@ -1,0 +1,6 @@
+Video Rotation Analysis - Method Comparison
+================================================================================
+Video: qr_code_video.mp4
+Sample rate: Every 30 frame(s)
+Total frame pairs: 7
+

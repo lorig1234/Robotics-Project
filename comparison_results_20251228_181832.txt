@@ -1,0 +1,34 @@
+Video Rotation Analysis - Method Comparison
+================================================================================
+Video: qr_code_video2.mp4
+Sample rate: Every 30 frame(s)
+Total frame pairs: 7
+
+[1] frame_0000_t0.000s.jpg → frame_0001_t1.012s.jpg
+  SIFT: Total=  3.628°
+  ArUco: Failed - No markers detected
+
+[2] frame_0001_t1.012s.jpg → frame_0002_t2.024s.jpg
+  SIFT: Total=  4.323°
+  ArUco: Failed - No markers detected
+
+[3] frame_0002_t2.024s.jpg → frame_0003_t3.036s.jpg
+  SIFT: Total=  2.829°
+  ArUco: Failed - No markers detected
+
+[4] frame_0003_t3.036s.jpg → frame_0004_t4.047s.jpg
+  SIFT: Total=  1.335°
+  ArUco: Failed - No markers detected
+
+[5] frame_0004_t4.047s.jpg → frame_0005_t5.059s.jpg
+  SIFT: Total=  2.141°
+  ArUco: Failed - No markers detected
+
+[6] frame_0005_t5.059s.jpg → frame_0006_t6.071s.jpg
+  SIFT: Total=  4.827°
+  ArUco: Failed - No markers detected
+
+[7] frame_0006_t6.071s.jpg → frame_0007_t7.083s.jpg
+  SIFT: Total=  4.066°
+  ArUco: Failed - No markers detected
+
