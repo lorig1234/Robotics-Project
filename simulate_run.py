@@ -1,86 +1,537 @@
+"""
+Video Rotation Analysis Simulation
+
+This script simulates the video rotation analysis to demonstrate the output format
+without requiring actual video files or dependencies.
+
+Matches the output format of analyze_video_path.py
+
+Usage:
+    python simulate_run.py [video_name] [sample_rate] [fps] [duration] [--visualize]
+    
+Example:
+    python simulate_run.py qr_code_video2.mp4 30 60 24
+    python simulate_run.py qr_code_video2.mp4 30 60 24 --visualize
+"""
+
 import random
 import time
+import sys
+import numpy as np
+from datetime import datetime
 
-def simulate_video_analysis():
-    """Simulate the frame-by-frame video rotation analysis."""
-    
-    print('=' * 80)
-    print('VIDEO ROTATION ANALYSIS - SIMULATION')
-    print('=' * 80)
-    print()
-    print('Loading video: qr_code_video2.mp4')
-    print('Sample rate: Every 30 frames (0.5 sec intervals at 60fps)')
-    print()
-    print('Video info:')
-    print('  FPS: 60.00')
-    print('  Total frames: 1440')
-    print('  Duration: 24.00 seconds')
-    print('  Expected output: ~24 frame pairs')
-    print()
-    print('-' * 80)
-    print('FRAME-BY-FRAME TRANSFORMATION ANALYSIS')
-    print('-' * 80)
-    print()
+# Try to import matplotlib for visualization
+try:
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
+    HAS_MATPLOTLIB = True
+except ImportError:
+    HAS_MATPLOTLIB = False
+    print("Warning: matplotlib not found. Install it for visualizations: pip install matplotlib")
 
-    num_frames = 24
+
+def euler_to_rotation_matrix(roll, pitch, yaw):
+    """Convert Euler angles (in degrees) to rotation matrix."""
+    roll, pitch, yaw = np.radians(roll), np.radians(pitch), np.radians(yaw)
     
-    for i in range(num_frames):
-        t1 = i * 0.5
-        t2 = (i + 1) * 0.5
-        
-        # Simulate rotation values
-        roll = random.uniform(-5, 5)
-        pitch = random.uniform(-12, 8)
-        yaw = random.uniform(-6, 3)
-        total = (roll**2 + pitch**2 + yaw**2) ** 0.5
-        
-        aruco_success = random.random() > 0.15  # 85% success rate
-        
-        print(f'[Frame {i:02d} -> {i+1:02d}] t={t1:.3f}s -> t={t2:.3f}s')
-        print(f'   Extracting frame_{i:04d}_t{t1:.3f}s.jpg ...')
-        print(f'   Extracting frame_{i+1:04d}_t{t2:.3f}s.jpg ...')
-        
-        time.sleep(0.1)  # Small delay for visual effect
-        
-        print(f'   Running SIFT feature detection...')
-        features = random.randint(200, 500)
-        inliers = random.randint(50, 150)
-        print(f'      Detected {features} features, {inliers} inliers')
-        print(f'      Computing essential matrix...')
-        print(f'      Decomposing rotation: Roll={roll:+6.2f}° Pitch={pitch:+6.2f}° Yaw={yaw:+6.2f}° Total={total:5.2f}°')
-        
-        time.sleep(0.1)
-        
-        print(f'   Running ArUco marker detection...')
-        if aruco_success:
-            markers = random.randint(1, 4)
-            a_roll = roll + random.uniform(-2, 2)
-            a_pitch = pitch + random.uniform(-3, 3)
-            a_yaw = yaw + random.uniform(-2, 2)
-            a_total = (a_roll**2 + a_pitch**2 + a_yaw**2) ** 0.5
-            print(f'      Detected {markers} ArUco marker(s)')
-            print(f'      Estimating pose from marker corners...')
-            print(f'      Computing rotation: Roll={a_roll:+6.2f}° Pitch={a_pitch:+6.2f}° Yaw={a_yaw:+6.2f}° Total={a_total:5.2f}°')
-            agreement = random.uniform(60, 95)
-            print(f'   Agreement: {agreement:.1f}% | ', end='')
-            if agreement > 85:
-                print('GOOD MATCH')
-            elif agreement > 70:
-                print('MODERATE MATCH')
-            else:
-                print('LOW MATCH - methods disagree')
+    Rx = np.array([[1, 0, 0], [0, np.cos(roll), -np.sin(roll)], [0, np.sin(roll), np.cos(roll)]])
+    Ry = np.array([[np.cos(pitch), 0, np.sin(pitch)], [0, 1, 0], [-np.sin(pitch), 0, np.cos(pitch)]])
+    Rz = np.array([[np.cos(yaw), -np.sin(yaw), 0], [np.sin(yaw), np.cos(yaw), 0], [0, 0, 1]])
+    
+    return Rz @ Ry @ Rx
+
+
+def compute_walking_path(rotations, timestamps):
+    """Compute walking path from rotation data."""
+    positions = [np.array([0.0, 0.0, 0.0])]
+    orientations = [np.eye(3)]
+    forward = np.array([0.0, 0.0, 1.0])
+    step_size = 0.5
+    
+    cumulative_roll, cumulative_pitch, cumulative_yaw = 0, 0, 0
+    
+    path_data = []
+    
+    for i, rot in enumerate(rotations):
+        if rot is None:
+            roll, pitch, yaw = 0, 0, 0
         else:
-            print(f'      No ArUco markers detected in frame pair')
-            print(f'   Skipping comparison (ArUco failed)')
+            roll, pitch, yaw = rot['roll'], rot['pitch'], rot['yaw']
         
-        print()
-        time.sleep(0.05)
+        cumulative_roll += roll
+        cumulative_pitch += pitch
+        cumulative_yaw += yaw
+        
+        R = euler_to_rotation_matrix(roll, pitch, yaw)
+        current_orientation = orientations[-1] @ R
+        orientations.append(current_orientation)
+        
+        current_forward = current_orientation @ forward
+        new_position = positions[-1] + step_size * current_forward
+        positions.append(new_position)
+        
+        path_data.append({
+            'timestamp': timestamps[i] if i < len(timestamps) else i * 0.5,
+            'roll': roll, 'pitch': pitch, 'yaw': yaw,
+            'cumulative_roll': cumulative_roll,
+            'cumulative_pitch': cumulative_pitch,
+            'cumulative_yaw': cumulative_yaw,
+            'position': new_position.copy(),
+            'forward': current_forward.copy()
+        })
+    
+    return np.array(positions), orientations, path_data
 
-    print('-' * 80)
-    print('SIMULATION COMPLETE')
-    print(f'Processed {num_frames} frame pairs')
-    print('=' * 80)
+
+def print_frame_analysis(frame_idx, timestamp, sift_result, aruco_result, agreement):
+    """Print detailed frame-by-frame analysis."""
+    print(f"\n[Frame {frame_idx:02d}] t={timestamp:.2f}s")
+    print("-" * 60)
+    
+    # SIFT Results
+    if sift_result['success']:
+        print(f"  SIFT:  Roll={sift_result['roll']:+7.2f}° Pitch={sift_result['pitch']:+7.2f}° "
+              f"Yaw={sift_result['yaw']:+7.2f}° Total={sift_result['total']:6.2f}°")
+        print(f"         Features: {sift_result.get('features', 'N/A')}, Inliers: {sift_result.get('inliers', 'N/A')}")
+    else:
+        print(f"  SIFT:  FAILED - {sift_result.get('error', 'Unknown error')}")
+    
+    # ArUco Results
+    if aruco_result['success']:
+        print(f"  ArUco: Roll={aruco_result['roll']:+7.2f}° Pitch={aruco_result['pitch']:+7.2f}° "
+              f"Yaw={aruco_result['yaw']:+7.2f}° Total={aruco_result['total']:6.2f}°")
+        print(f"         Markers detected: {aruco_result.get('markers', 'N/A')}")
+    else:
+        print(f"  ArUco: FAILED - {aruco_result.get('error', 'Unknown error')}")
+    
+    # Agreement
+    if agreement:
+        print(f"  Agreement:")
+        print(f"    Euler: {agreement['euler_agreement']:.1f}% | Matrix: {agreement['matrix_agreement']:.1f}%")
+        print(f"    Diff: Roll={agreement['roll_diff']:.2f}° Pitch={agreement['pitch_diff']:.2f}° Yaw={agreement['yaw_diff']:.2f}°")
+        
+        # Interpretation
+        if agreement['euler_agreement'] > 85:
+            print(f"    Status: GOOD MATCH ✓")
+        elif agreement['euler_agreement'] > 70:
+            print(f"    Status: MODERATE MATCH ~")
+        else:
+            print(f"    Status: LOW MATCH - methods disagree ✗")
 
 
-if __name__ == '__main__':
-    simulate_video_analysis()
+def print_walking_path(method_name, path_data, color_code):
+    """Print walking path reconstruction for a method."""
+    print(f"\n{'='*80}")
+    print(f"{color_code}WALKING PATH RECONSTRUCTION - {method_name}")
+    print(f"{'='*80}")
+    
+    for i, data in enumerate(path_data):
+        total_rot = np.sqrt(data['roll']**2 + data['pitch']**2 + data['yaw']**2)
+        
+        print(f"[t={data['timestamp']:5.1f}s] Frame {i:02d}")
+        print(f"    Rotation:   Roll={data['roll']:+6.2f}°  Pitch={data['pitch']:+6.2f}°  Yaw={data['yaw']:+6.2f}°  (Total={total_rot:5.2f}°)")
+        print(f"    Cumulative: Roll={data['cumulative_roll']:+7.2f}°  Pitch={data['cumulative_pitch']:+7.2f}°  Yaw={data['cumulative_yaw']:+7.2f}°")
+        print(f"    Position:   X={data['position'][0]:+6.2f}  Y={data['position'][1]:+6.2f}  Z={data['position'][2]:+6.2f}")
+        print(f"    Facing:     X={data['forward'][0]:+5.2f}  Y={data['forward'][1]:+5.2f}  Z={data['forward'][2]:+5.2f}")
+        
+        # Movement interpretation
+        if abs(data['yaw']) > 3:
+            direction = "LEFT" if data['yaw'] > 0 else "RIGHT"
+            print(f"    Movement:   Turning {direction} ({abs(data['yaw']):.1f}°)")
+        elif abs(data['pitch']) > 4:
+            direction = "UP" if data['pitch'] > 0 else "DOWN"
+            print(f"    Movement:   Looking {direction} ({abs(data['pitch']):.1f}°)")
+        elif abs(data['roll']) > 3:
+            direction = "LEFT" if data['roll'] > 0 else "RIGHT"
+            print(f"    Movement:   Tilting {direction} ({abs(data['roll']):.1f}°)")
+        else:
+            print(f"    Movement:   Walking forward (steady)")
+
+
+def print_path_summary(method_name, path_data, positions):
+    """Print summary of walking path."""
+    if not path_data:
+        return
+        
+    final = path_data[-1]
+    
+    print(f"\n{'-'*40}")
+    print(f"{method_name} PATH SUMMARY")
+    print(f"{'-'*40}")
+    print(f"Total time: {final['timestamp']:.1f} seconds")
+    print(f"Final cumulative rotation:")
+    print(f"    Roll (tilt):     {final['cumulative_roll']:+.2f}°")
+    print(f"    Pitch (up/down): {final['cumulative_pitch']:+.2f}°")
+    print(f"    Yaw (left/right):{final['cumulative_yaw']:+.2f}°")
+    print(f"Estimated displacement:")
+    print(f"    X (left/right):  {final['position'][0]:+.2f} units")
+    print(f"    Y (up/down):     {final['position'][1]:+.2f} units")
+    print(f"    Z (forward):     {final['position'][2]:+.2f} units")
+    
+    # Interpretation
+    print(f"\nInterpretation:")
+    if final['cumulative_yaw'] < -10:
+        print(f"  → Turned RIGHT overall")
+    elif final['cumulative_yaw'] > 10:
+        print(f"  → Turned LEFT overall")
+    else:
+        print(f"  → Walked mostly STRAIGHT")
+    
+    if final['cumulative_pitch'] < -20:
+        print(f"  → Camera was tilting DOWN")
+    elif final['cumulative_pitch'] > 20:
+        print(f"  → Camera was tilting UP")
+
+
+def calculate_agreement(sift_result, aruco_result):
+    """Calculate agreement between both methods."""
+    if not (sift_result['success'] and aruco_result['success']):
+        return None
+    
+    roll_diff = abs(sift_result['roll'] - aruco_result['roll'])
+    pitch_diff = abs(sift_result['pitch'] - aruco_result['pitch'])
+    yaw_diff = abs(sift_result['yaw'] - aruco_result['yaw'])
+    
+    rms_diff = np.sqrt((roll_diff**2 + pitch_diff**2 + yaw_diff**2) / 3)
+    euler_agreement = max(0, 100 - (rms_diff * 10))
+    
+    # Simulate matrix agreement (similar to euler agreement with some variation)
+    matrix_agreement = max(0, euler_agreement + random.uniform(-5, 5))
+    
+    return {
+        'roll_diff': roll_diff,
+        'pitch_diff': pitch_diff,
+        'yaw_diff': yaw_diff,
+        'euler_agreement': euler_agreement,
+        'matrix_agreement': matrix_agreement,
+        'frobenius_norm': rms_diff * 0.1,
+        'angle_difference': rms_diff
+    }
+
+
+def simulate_sift_result():
+    """Simulate SIFT method result."""
+    roll = random.uniform(-5, 5)
+    pitch = random.uniform(-12, 8)
+    yaw = random.uniform(-6, 3)
+    total = np.sqrt(roll**2 + pitch**2 + yaw**2)
+    
+    return {
+        'success': True,
+        'method': 'SIFT',
+        'roll': roll,
+        'pitch': pitch,
+        'yaw': yaw,
+        'total': total,
+        'features': random.randint(200, 500),
+        'inliers': random.randint(50, 150)
+    }
+
+
+def simulate_aruco_result(sift_result, success_rate=0.85):
+    """Simulate ArUco method result based on SIFT result."""
+    if random.random() > success_rate:
+        return {
+            'success': False,
+            'method': 'ArUco',
+            'error': 'No markers detected'
+        }
+    
+    # ArUco result similar to SIFT but with some variation
+    roll = sift_result['roll'] + random.uniform(-2, 2)
+    pitch = sift_result['pitch'] + random.uniform(-3, 3)
+    yaw = sift_result['yaw'] + random.uniform(-2, 2)
+    total = np.sqrt(roll**2 + pitch**2 + yaw**2)
+    
+    return {
+        'success': True,
+        'method': 'ArUco',
+        'roll': roll,
+        'pitch': pitch,
+        'yaw': yaw,
+        'total': total,
+        'markers': random.randint(1, 4)
+    }
+
+
+def plot_dual_paths(sift_positions, aruco_positions, sift_orientations, aruco_orientations, timestamps, output_file):
+    """Create visualization comparing both walking paths."""
+    if not HAS_MATPLOTLIB:
+        print("Matplotlib not available, skipping visualization")
+        return
+    
+    sift_pos = np.array(sift_positions)
+    aruco_pos = np.array(aruco_positions)
+    
+    fig = plt.figure(figsize=(16, 10))
+    
+    # 3D comparison plot
+    ax1 = fig.add_subplot(221, projection='3d')
+    ax1.plot(sift_pos[:, 0], sift_pos[:, 2], sift_pos[:, 1], 'b-', linewidth=2, label='SIFT Path')
+    ax1.plot(aruco_pos[:, 0], aruco_pos[:, 2], aruco_pos[:, 1], 'r-', linewidth=2, label='ArUco Path')
+    ax1.scatter(0, 0, 0, c='green', s=100, marker='o', label='Start')
+    ax1.scatter(sift_pos[-1, 0], sift_pos[-1, 2], sift_pos[-1, 1], c='blue', s=100, marker='s')
+    ax1.scatter(aruco_pos[-1, 0], aruco_pos[-1, 2], aruco_pos[-1, 1], c='red', s=100, marker='s')
+    ax1.set_xlabel('X (Left/Right)')
+    ax1.set_ylabel('Z (Forward)')
+    ax1.set_zlabel('Y (Up/Down)')
+    ax1.set_title('3D Walking Path Comparison')
+    ax1.legend()
+    
+    # Top-down view
+    ax2 = fig.add_subplot(222)
+    ax2.plot(sift_pos[:, 0], sift_pos[:, 2], 'b-', linewidth=2, label='SIFT')
+    ax2.plot(aruco_pos[:, 0], aruco_pos[:, 2], 'r-', linewidth=2, label='ArUco')
+    ax2.scatter(0, 0, c='green', s=100, marker='o', label='Start')
+    ax2.scatter(sift_pos[-1, 0], sift_pos[-1, 2], c='blue', s=80, marker='s')
+    ax2.scatter(aruco_pos[-1, 0], aruco_pos[-1, 2], c='red', s=80, marker='s')
+    
+    # Add orientation arrows
+    for i in range(0, len(sift_orientations), max(1, len(sift_orientations)//8)):
+        if i < len(sift_pos):
+            forward = sift_orientations[i] @ np.array([0, 0, 0.3])
+            ax2.annotate('', xy=(sift_pos[i, 0] + forward[0], sift_pos[i, 2] + forward[2]),
+                        xytext=(sift_pos[i, 0], sift_pos[i, 2]),
+                        arrowprops=dict(arrowstyle='->', color='blue', alpha=0.5))
+    for i in range(0, len(aruco_orientations), max(1, len(aruco_orientations)//8)):
+        if i < len(aruco_pos):
+            forward = aruco_orientations[i] @ np.array([0, 0, 0.3])
+            ax2.annotate('', xy=(aruco_pos[i, 0] + forward[0], aruco_pos[i, 2] + forward[2]),
+                        xytext=(aruco_pos[i, 0], aruco_pos[i, 2]),
+                        arrowprops=dict(arrowstyle='->', color='red', alpha=0.5))
+    
+    ax2.set_xlabel('X (Left/Right)')
+    ax2.set_ylabel('Z (Forward)')
+    ax2.set_title("Top-Down View (Bird's Eye)")
+    ax2.legend()
+    ax2.axis('equal')
+    ax2.grid(True, alpha=0.3)
+    
+    # Side view (Z-Y plane)
+    ax3 = fig.add_subplot(223)
+    ax3.plot(sift_pos[:, 2], sift_pos[:, 1], 'b-', linewidth=2, label='SIFT')
+    ax3.plot(aruco_pos[:, 2], aruco_pos[:, 1], 'r-', linewidth=2, label='ArUco')
+    ax3.scatter(0, 0, c='green', s=100, marker='o', label='Start')
+    ax3.set_xlabel('Z (Forward)')
+    ax3.set_ylabel('Y (Up/Down)')
+    ax3.set_title('Side View')
+    ax3.legend()
+    ax3.grid(True, alpha=0.3)
+    
+    # Deviation over time
+    ax4 = fig.add_subplot(224)
+    min_len = min(len(sift_pos), len(aruco_pos))
+    deviations = [np.linalg.norm(sift_pos[i] - aruco_pos[i]) for i in range(min_len)]
+    time_axis = timestamps[:min_len] if len(timestamps) >= min_len else list(range(min_len))
+    ax4.plot(time_axis, deviations, 'g-', linewidth=2)
+    ax4.fill_between(time_axis, deviations, alpha=0.3, color='green')
+    ax4.set_xlabel('Time (s)')
+    ax4.set_ylabel('Path Deviation (units)')
+    ax4.set_title('SIFT vs ArUco Path Deviation Over Time')
+    ax4.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig(output_file, dpi=150)
+    print(f"\nVisualization saved to: {output_file}")
+    plt.show()
+
+
+def analyze_video(video_path, sample_rate=30, fps=60, duration=24, marker_size=0.1, dict_type='DICT_6X6_250', visualize=False):
+    """Main function to simulate video analysis and visualize walking path."""
+    
+    total_frames = int(fps * duration)
+    num_frame_pairs = total_frames // sample_rate
+    
+    print("=" * 80)
+    print("VIDEO ROTATION ANALYSIS WITH WALKING PATH VISUALIZATION")
+    print("=" * 80)
+    print(f"Video: {video_path}")
+    print(f"Sample rate: Every {sample_rate} frames")
+    print(f"ArUco marker size: {marker_size}m")
+    print(f"ArUco dictionary: {dict_type}")
+    
+    # Simulate frame extraction
+    print(f"\n{'='*80}")
+    print("EXTRACTING FRAMES FROM VIDEO")
+    print(f"{'='*80}")
+    print(f"Video: {video_path}")
+    print(f"FPS: {fps:.2f}")
+    print(f"Total frames: {total_frames}")
+    print(f"Duration: {duration:.2f} seconds")
+    print(f"Sample rate: Every {sample_rate} frame(s)")
+    print(f"Expected output: ~{num_frame_pairs} frames")
+    
+    timestamps = [i * sample_rate / fps for i in range(num_frame_pairs + 1)]
+    
+    print(f"Extracted {num_frame_pairs + 1} frames")
+    
+    # Process frame pairs
+    print(f"\n{'='*80}")
+    print(f"PROCESSING {num_frame_pairs} FRAME PAIRS")
+    print(f"{'='*80}")
+    
+    sift_rotations = []
+    aruco_rotations = []
+    all_results = []
+    
+    sift_successes = 0
+    aruco_successes = 0
+    both_successes = 0
+    
+    for i in range(num_frame_pairs):
+        timestamp = timestamps[i]
+        
+        # Simulate both methods
+        sift_result = simulate_sift_result()
+        aruco_result = simulate_aruco_result(sift_result)
+        
+        # Calculate agreement
+        agreement = calculate_agreement(sift_result, aruco_result)
+        
+        # Print frame analysis
+        print_frame_analysis(i, timestamp, sift_result, aruco_result, agreement)
+        
+        # Track successes
+        if sift_result['success']:
+            sift_successes += 1
+            sift_rotations.append(sift_result)
+        else:
+            sift_rotations.append({'roll': 0, 'pitch': 0, 'yaw': 0, 'success': False})
+        
+        if aruco_result['success']:
+            aruco_successes += 1
+            aruco_rotations.append(aruco_result)
+        else:
+            aruco_rotations.append({'roll': 0, 'pitch': 0, 'yaw': 0, 'success': False})
+        
+        if sift_result['success'] and aruco_result['success']:
+            both_successes += 1
+        
+        all_results.append({
+            'frame_idx': i,
+            'timestamp': timestamp,
+            'sift': sift_result,
+            'aruco': aruco_result,
+            'agreement': agreement
+        })
+        
+        time.sleep(0.05)  # Small delay for visual effect
+    
+    # Summary statistics
+    print(f"\n{'='*80}")
+    print("PROCESSING SUMMARY")
+    print(f"{'='*80}")
+    print(f"Total frame pairs: {num_frame_pairs}")
+    print(f"SIFT successful:   {sift_successes} ({sift_successes/num_frame_pairs*100:.1f}%)")
+    print(f"ArUco successful:  {aruco_successes} ({aruco_successes/num_frame_pairs*100:.1f}%)")
+    print(f"Both successful:   {both_successes} ({both_successes/num_frame_pairs*100:.1f}%)")
+    
+    if both_successes > 0:
+        avg_euler_agreement = np.mean([r['agreement']['euler_agreement'] 
+                                       for r in all_results if r['agreement']])
+        avg_matrix_agreement = np.mean([r['agreement']['matrix_agreement'] 
+                                        for r in all_results if r['agreement']])
+        print(f"\nAverage Euler Agreement:  {avg_euler_agreement:.1f}%")
+        print(f"Average Matrix Agreement: {avg_matrix_agreement:.1f}%")
+    
+    # Compute walking paths for both methods
+    sift_positions, sift_orientations, sift_path_data = compute_walking_path(sift_rotations, timestamps)
+    aruco_positions, aruco_orientations, aruco_path_data = compute_walking_path(aruco_rotations, timestamps)
+    
+    # Print walking paths
+    print_walking_path("SIFT", sift_path_data, "\033[94m")  # Blue
+    print_path_summary("SIFT", sift_path_data, sift_positions)
+    
+    print_walking_path("ArUco", aruco_path_data, "\033[91m")  # Red
+    print_path_summary("ArUco", aruco_path_data, aruco_positions)
+    
+    # Create visualization if requested
+    if visualize:
+        output_file = f"walking_path_comparison_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+        plot_dual_paths(sift_positions, aruco_positions, 
+                       sift_orientations, aruco_orientations, 
+                       timestamps, output_file)
+    
+    # Save results to file
+    results_file = f"simulation_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+    save_results(results_file, video_path, all_results, sift_path_data, aruco_path_data)
+    print(f"\nResults saved to: {results_file}")
+    
+    print(f"\n{'='*80}")
+    print("ANALYSIS COMPLETE")
+    print(f"{'='*80}")
+
+
+def save_results(filename, video_path, results, sift_path, aruco_path):
+    """Save analysis results to file."""
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write("Video Rotation Analysis Results (SIMULATION)\n")
+        f.write("=" * 80 + "\n")
+        f.write(f"Video: {video_path}\n")
+        f.write(f"Total frame pairs: {len(results)}\n\n")
+        
+        f.write("Frame-by-Frame Results:\n")
+        f.write("-" * 80 + "\n")
+        
+        for r in results:
+            f.write(f"\n[Frame {r['frame_idx']:02d}] t={r['timestamp']:.2f}s\n")
+            
+            if r['sift']['success']:
+                f.write(f"  SIFT:  Roll={r['sift']['roll']:+7.2f}° Pitch={r['sift']['pitch']:+7.2f}° "
+                       f"Yaw={r['sift']['yaw']:+7.2f}° Total={r['sift']['total']:6.2f}°\n")
+            else:
+                f.write(f"  SIFT:  FAILED - {r['sift'].get('error', 'Unknown')}\n")
+            
+            if r['aruco']['success']:
+                f.write(f"  ArUco: Roll={r['aruco']['roll']:+7.2f}° Pitch={r['aruco']['pitch']:+7.2f}° "
+                       f"Yaw={r['aruco']['yaw']:+7.2f}° Total={r['aruco']['total']:6.2f}°\n")
+            else:
+                f.write(f"  ArUco: FAILED - {r['aruco'].get('error', 'Unknown')}\n")
+            
+            if r['agreement']:
+                f.write(f"  Agreement: Euler={r['agreement']['euler_agreement']:.1f}% "
+                       f"Matrix={r['agreement']['matrix_agreement']:.1f}%\n")
+        
+        f.write("\n" + "=" * 80 + "\n")
+        f.write("Walking Path Summary\n")
+        f.write("-" * 80 + "\n")
+        
+        if sift_path:
+            final = sift_path[-1]
+            f.write(f"\nSIFT Path:\n")
+            f.write(f"  Final position: X={final['position'][0]:.2f} Y={final['position'][1]:.2f} Z={final['position'][2]:.2f}\n")
+            f.write(f"  Cumulative rotation: Roll={final['cumulative_roll']:.2f}° "
+                   f"Pitch={final['cumulative_pitch']:.2f}° Yaw={final['cumulative_yaw']:.2f}°\n")
+        
+        if aruco_path:
+            final = aruco_path[-1]
+            f.write(f"\nArUco Path:\n")
+            f.write(f"  Final position: X={final['position'][0]:.2f} Y={final['position'][1]:.2f} Z={final['position'][2]:.2f}\n")
+            f.write(f"  Cumulative rotation: Roll={final['cumulative_roll']:.2f}° "
+                   f"Pitch={final['cumulative_pitch']:.2f}° Yaw={final['cumulative_yaw']:.2f}°\n")
+
+
+def main():
+    """Main entry point."""
+    # Check for --visualize flag
+    visualize = '--visualize' in sys.argv
+    args = [arg for arg in sys.argv[1:] if arg != '--visualize']
+    
+    video_path = args[0] if len(args) > 0 else "qr_code_video2.mp4"
+    sample_rate = int(args[1]) if len(args) > 1 else 30
+    fps = float(args[2]) if len(args) > 2 else 60
+    duration = float(args[3]) if len(args) > 3 else 24
+    
+    print("Usage: python simulate_run.py [video_name] [sample_rate] [fps] [duration] [--visualize]")
+    print(f"\nRunning simulation with:")
+    print(f"  Video: {video_path}")
+    print(f"  Sample rate: {sample_rate}")
+    print(f"  FPS: {fps}")
+    print(f"  Duration: {duration}s")
+    print(f"  Visualize: {visualize}\n")
+    
+    analyze_video(video_path, sample_rate, fps, duration, visualize=visualize)
+
+
+if __name__ == "__main__":
+    main()
